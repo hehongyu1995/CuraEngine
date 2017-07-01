@@ -31,6 +31,7 @@ public:
     std::vector<Polygons> insets;   //!< The skin can have perimeters so that the skin lines always start at a perimeter instead of in the middle of an infill cell.
     Polygons perimeter_gaps; //!< The gaps between the extra skin walls and gaps between the outer skin wall and the inner part inset
     Polygons inner_infill; //!< The inner infill of the skin with which the area within the innermost inset is filled
+    Polygons top_most_skinfill; //!< The inner infill which has air directly above
 };
 /*!
     The SliceLayerPart is a single enclosed printable area for a single layer. (Also known as islands)
@@ -46,6 +47,7 @@ public:
     std::vector<Polygons> insets;         //!< The insets are generated with. The insets are also known as perimeters or the walls.
     Polygons perimeter_gaps; //!< The gaps betwee nconsecutive walls and between the inner wall and outer skin inset
     std::vector<SkinPart> skin_parts;     //!< The skin parts which are filled for 100% with lines and/or insets.
+    std::vector<SkinPart> topmost_skin_parts;     //!< The top-most skin parts which are filled for 100% with lines and/or insets. Directly above these parts there's air.
 
     /*!
      * The areas inside of the mesh.
