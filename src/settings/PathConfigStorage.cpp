@@ -49,6 +49,13 @@ PathConfigStorage::MeshPathConfigs::MeshPathConfigs(const SliceMeshStorage& mesh
     , mesh.getSettingInPercentage("material_flow")
     , GCodePathConfig::SpeedDerivatives{mesh.getSettingInMillimetersPerSecond("speed_topbottom"), mesh.getSettingInMillimetersPerSecond("acceleration_topbottom"), mesh.getSettingInMillimetersPerSecond("jerk_topbottom")}
 )
+, topmost_skin_config(
+    PrintFeatureType::Skin
+    , mesh.getSettingInMicrons("topmost_skin_line_width")
+    , layer_thickness
+    , mesh.getSettingInPercentage("material_flow")
+    , GCodePathConfig::SpeedDerivatives{mesh.getSettingInMillimetersPerSecond("speed_topmost_skin"), mesh.getSettingInMillimetersPerSecond("acceleration_topmost_skin"), mesh.getSettingInMillimetersPerSecond("jerk_topmost_skin")}
+)
 , ironing_config(
     PrintFeatureType::Skin
     , mesh.getSettingInMicrons("skin_line_width")
@@ -240,6 +247,7 @@ void cura::PathConfigStorage::handleInitialLayerSpeedup(const SliceDataStorage& 
 
             //Skin speed (per mesh).
             mesh_config.skin_config.smoothSpeed(initial_layer_speed_config, layer_nr, initial_speedup_layer_count);
+            mesh_config.topmost_skin_config.smoothSpeed(initial_layer_speed_config, layer_nr, initial_speedup_layer_count);
             mesh_config.ironing_config.smoothSpeed(initial_layer_speed_config, layer_nr, initial_speedup_layer_count);
             mesh_config.perimeter_gap_config.smoothSpeed(initial_layer_speed_config, layer_nr, initial_speedup_layer_count);
 
